@@ -6,7 +6,7 @@
     <title>Life Dashboard</title>
     <link rel="stylesheet" href="styles.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&display=swap" rel="stylesheet">  
-   
+    <script src="app.js" defer></script>
 </head>
 <body>
     <header>
@@ -17,13 +17,29 @@
     <main class="panels">
 
         <section id="tasks">
-            <h2>Tasks</h2>
+            <div class="header-row">
+                <h2>Tasks</h2>
+                <button id="add-task-btn">Add Task</button>
+            </div>
+
+            <!-- Task Modal -->
+            <div id="task-modal" class="modal">
+                <div class="modal-content">
+                    <span class="close" id="close-modal">&times;</span>
+                    <h2>Add Task</h2>
+                    <input id="task-input" type="text" placeholder="New Task..." />
+                    <div class="modal-actions">
+                        <button id="save-task-btn">Save</button>
+                    </div>
+                </div>
+            </div>
+
             <ul id="task-list">
-                <li><label><input type="checkbox"> Gym at 8pm</label></li>
-                <li><label><input type="checkbox"> Finish coding practice</label></li>
-                <li><label><input type="checkbox"> Grocery shopping</label></li>
-                <li><label><input type="checkbox"> Meal prep</label></li>
-                <li><label><input type="checkbox"> Read 20 pages</label></li>
+                <li><label><input type="checkbox">Gym at 8pm</label></li>
+                <li><label><input type="checkbox">Finish coding practice</label></li>
+                <li><label><input type="checkbox">Grocery shopping</label></li>
+                <li><label><input type="checkbox">Meal prep</label></li>
+                <li><label><input type="checkbox">Read 20 pages</label></li>
             </ul>
         </section>
     
