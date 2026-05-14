@@ -1,0 +1,45 @@
+:root {
+  --bg: #0F172A;
+  --panel: #1E293B;
+  --panel-dark: #020617;
+
+  --accent-primary: #38BDF8;
+  --accent-secondary: #A78BFA;
+  --accent-notes: #F59E0B;
+  --success: #22C55E;
+
+  --text-main: #F8FAFC;
+  --text-muted: #94A3B8;
+  --border: #334155;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+}
+
+body {
+  background-color: var(--bg);
+  color: var(--text-main);
+  font-family: Arial, sans-serif;
+  margin: 0;
+}
+
+header {
+  background-color: var(--panel-dark);
+  padding: 20px;
+}
+
+section {
+  background-color: var(--panel);
+  border: 1px solid var(--border);
+  margin: 20px;
+  padding: 20px;
+  border-radius: 10px;
+}
+
+.panels {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 1rem;
+}
