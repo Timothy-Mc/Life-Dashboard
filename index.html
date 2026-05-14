@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Life Dashboard</title>
     <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&display=swap" rel="stylesheet">  
    
 </head>
 <body>
@@ -13,36 +14,80 @@
         <p>12th May, 2026</p>
     </header>
 
-    <div class="panels">
+    <main class="panels">
+
         <section id="tasks">
             <h2>Tasks</h2>
             <ul id="task-list">
-                <li><input type="checkbox"> Gym at 8pm</li>
-                <li><input type="checkbox"> Finish coding practice</li>
-                <li><input type="checkbox"> Grocery shopping</li>
-                <li><input type="checkbox"> Meal prep</li>
-                <li><input type="checkbox"> Read 20 pages</li>
+                <li><label><input type="checkbox"> Gym at 8pm</label></li>
+                <li><label><input type="checkbox"> Finish coding practice</label></li>
+                <li><label><input type="checkbox"> Grocery shopping</label></li>
+                <li><label><input type="checkbox"> Meal prep</label></li>
+                <li><label><input type="checkbox"> Read 20 pages</label></li>
             </ul>
         </section>
     
         <section id="habits">
             <h2>Habits</h2>
-            <div class="habit-grid">
-                <div>Monday</div>
-                <div>Tuesday</div>
-                <div>Wednesday</div>
-                <div>Thursday</div>
-                <div>Friday</div>
-                <div>Saturday</div>
-                <div>Sunday</div>
-    
-                <div class="habit-cell"></div>
-                <div class="habit-cell"></div>
-                <div class="habit-cell"></div>
-                <div class="habit-cell"></div>
-                <div class="habit-cell"></div>
-                <div class="habit-cell"></div>
-                <div class="habit-cell"></div>
+            <div class="habit">
+                <span class="habit-name">Exercise</span>
+                <div class="habit-days">
+                    <span class="day-label">Mon</span>
+                    <span class="day-label">Tue</span>
+                    <span class="day-label">Wed</span>
+                    <span class="day-label">Thu</span>
+                    <span class="day-label">Fri</span>
+                    <span class="day-label">Sat</span>
+                    <span class="day-label">Sun</span>
+
+                    <span class="day-cell"></span>
+                    <span class="day-cell"></span>
+                    <span class="day-cell"></span>
+                    <span class="day-cell"></span>
+                    <span class="day-cell"></span>
+                    <span class="day-cell"></span>
+                    <span class="day-cell"></span>
+                </div>
+            </div>
+            <div class="habit">
+                <span class="habit-name">Read</span>
+                <div class="habit-days">
+                    <span class="day-label">Mon</span>
+                    <span class="day-label">Tue</span>
+                    <span class="day-label">Wed</span>
+                    <span class="day-label">Thu</span>
+                    <span class="day-label">Fri</span>
+                    <span class="day-label">Sat</span>
+                    <span class="day-label">Sun</span>
+                    
+                    <span class="day-cell"></span>
+                    <span class="day-cell"></span>
+                    <span class="day-cell"></span>
+                    <span class="day-cell"></span>
+                    <span class="day-cell"></span>
+                    <span class="day-cell"></span>
+                    <span class="day-cell"></span>
+                </div>
+            </div>
+            <div class="habit">
+                <span class="habit-name">Code</span>
+                <div class="habit-days">
+                    <span class="day-label">Mon</span>
+                    <span class="day-label">Tue</span>
+                    <span class="day-label">Wed</span>
+                    <span class="day-label">Thu</span>
+                    <span class="day-label">Fri</span>
+                    <span class="day-label">Sat</span>
+                    <span class="day-label">Sun</span>
+                    
+                    <span class="day-cell"></span>
+                    <span class="day-cell"></span>
+                    <span class="day-cell"></span>
+                    <span class="day-cell"></span>
+                    <span class="day-cell"></span>
+                    <span class="day-cell"></span>
+                    <span class="day-cell"></span>
+                </div>
             </div>
         </section>
     
@@ -50,11 +95,11 @@
             <h2>Notes</h2>
             <textarea placeholder="Somethings"></textarea>
         </section>
-    </div>
+    </main>
 
 
     <footer>
-        Tim Mc - Built with HTML & CSS
+        <p>Tim Mc - Built with HTML & CSS</p>
     </footer>
 </body>
 </html>
