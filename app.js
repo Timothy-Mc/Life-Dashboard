@@ -3,12 +3,6 @@ console.log("Life Dashboard Loaded")
 
 const tasks = document.querySelectorAll('#task-list input[type="checkbox"]');
 
-tasks.forEach(task => {
-    task.addEventListener('change', () => {
-        console.log(task.checked);
-    })
-})
-
 // TODO: Add functionality to mark tasks as completed and move them to a "Completed Tasks" section
 document.querySelectorAll('#task-list li').forEach(task => {
     const checkbox = task.querySelector('input[type="checkbox"]');
@@ -60,6 +54,14 @@ saveTaskBtn.onclick = function() {
 
 
     taskList.appendChild(newTask);
+
+    newTaskCheckbox.addEventListener('change', function () {
+        if (newTaskCheckbox.checked) {
+            newTask.classList.add('completed');
+        } else {
+            newTask.classList.remove('completed');
+        }
+    });
 
     taskInput.value = "";
     taskModal.classList.remove('active');
