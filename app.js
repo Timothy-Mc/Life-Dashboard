@@ -1,32 +1,86 @@
 console.log("Life Dashboard Loaded")
 
+// TODO: Add functionality to save tasks to local storage so they persist across page reloads
+let tasks = [];
 
-const tasks = document.querySelectorAll('#task-list input[type="checkbox"]');
+function saveTasks() {
+    localStorage.setItem('tasks', JSON.stringify(tasks));
+}
 
-// TODO: Add functionality to mark tasks as completed and move them to a "Completed Tasks" section
-document.querySelectorAll('#task-list li').forEach(task => {
-    const checkbox = task.querySelector('input[type="checkbox"]');
+function loadTasks() {
+    const savedTasks = localStorage.getItem('tasks');
 
-    checkbox.addEventListener('change', () => {
-        if (checkbox.checked) {
-            task.classList.add('completed');
-        } else {
-            task.classList.remove('completed');
+    if (savedTasks) {
+        tasks = JSON.parse(savedTasks);
+        renderTasks();
+    } else {
+        tasks = []
+    }
+}
+
+loadTasks();
+
+function renderTasks() {
+    var taskList = document.getElementById('task-list');
+    taskList.innerHTML = "";
+
+    tasks.forEach(task => {
+        const li = document.createElement('li');
+
+        if (task.done === true) {
+            li.classList.add("completed")
         }
+
+        const label = document.createElement('label');
+
+        const checkbox = document.createElement('input');
+        checkbox.type = "checkbox";
+        checkbox.checked = task.done;
+
+        const text = document.createElement('span');
+        text.classList.add('task-text');
+        text.textContent = task.text;
+
+        const del = document.createElement('span');
+        del.classList.add('delete-task');
+
+        // Delete Logic
+        const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+        svg.setAttribute("viewBox", "0 0 24 24");
+        svg.setAttribute("width", "14");
+        svg.setAttribute("height", "14");
+
+        const path = document.createElementNS("http://www.w3.org/2000/svg", "path");
+        path.setAttribute("d", "M6 6L18 18M18 6L6 18");
+        path.setAttribute("stroke", "currentColor");
+        path.setAttribute("stroke-width", "2");
+        path.setAttribute("stroke-linecap", "round");
+
+        del.onclick = () => {
+            tasks = tasks.filter(t => t.id !== task.id);
+            saveTasks();
+            renderTasks();
+        }
+
+        // Checkbox Logic
+        checkbox.onchange = () => {
+            task.done = checkbox.checked;
+            saveTasks();
+            renderTasks();
+        }
+
+        svg.appendChild(path);
+        del.appendChild(svg);
+
+        label.appendChild(checkbox);
+        label.appendChild(text);
+        label.appendChild(del);
+
+        li.appendChild(label)
+        taskList.appendChild(li)
+
     });
-});
-
-
-// TODO: Delete Task Functionality
-document.querySelectorAll('#task-list .delete-task').forEach(btn => {
-    btn.addEventListener('click', () => {
-        const taskItem = btn.closest('li');
-        if (taskItem) {
-            taskItem.remove();
-        }
-    })
-})
-
+}
 
 // TODO: Modal Setup for adding new tasks and habits
 
@@ -46,61 +100,30 @@ closeSpan.onclick = function() {
 
 saveTaskBtn.onclick = function() {
     var taskName = taskInput.value.trim();
-    var taskList = document.getElementById('task-list');
-    const taskDeleteBtn = document.querySelectorAll('#task-list .delete-task')
 
     if (taskName === "") {
         alert("Please enter a task name.");
         return;
     }
 
-    const newTask = document.createElement('li');
-    const newTaskLabel = document.createElement('label');
-    const newTaskCheckbox = document.createElement('input');
-    const newTaskText = document.createElement('span');
-    const deleteBtn = document.createElement('span');
+    const taskExist = tasks.some(task => task.text === taskName)
 
-    deleteBtn.classList.add('delete-task');
-    const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
-    svg.setAttribute("viewBox", "0 0 24 24");
-    svg.setAttribute("width", "14");
-    svg.setAttribute("height", "14");
+    if (taskExist) {
+        alert("Task already exists!");
+        return;
+    }
+    
 
-    const path = document.createElementNS("http://www.w3.org/2000/svg", "path");
-    path.setAttribute("d", "M6 6L18 18M18 6L6 18");
-    path.setAttribute("stroke", "currentColor");
-    path.setAttribute("stroke-width", "2");
-    path.setAttribute("stroke-linecap", "round");
+    const newTask = {
+        id: Date.now(),
+        text: taskName,
+        done: false
+    };
 
-    svg.appendChild(path);
-    deleteBtn.appendChild(svg);
+    tasks.push(newTask);
 
-    newTaskCheckbox.type = "checkbox";
-
-    newTaskLabel.appendChild(newTaskCheckbox);
-    newTaskText.classList.add('task-text');
-    newTaskText.textContent = taskName;
-    newTaskLabel.appendChild(newTaskText);
-    newTaskLabel.appendChild(deleteBtn);
-    newTask.appendChild(newTaskLabel);
-
-
-    taskList.appendChild(newTask);
-
-    newTaskCheckbox.addEventListener('change', function () {
-        if (newTaskCheckbox.checked) {
-            newTask.classList.add('completed');
-        } else {
-            newTask.classList.remove('completed');
-        }
-    });
-
-    deleteBtn.addEventListener('click', function () {
-        const taskItem = deleteBtn.closest('li');
-        if (taskItem) {
-            taskItem.remove();
-        }
-    });
+    saveTasks();
+    renderTasks();
 
     taskInput.value = "";
     taskModal.classList.remove('active');
