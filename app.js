@@ -1,5 +1,8 @@
 console.log("Life Dashboard Loaded")
 
+
+// ? Task Panel
+
 // TODO: Add functionality to save tasks to local storage so they persist across page reloads
 let tasks = [];
 
@@ -95,6 +98,7 @@ addTaskBtn.onclick = function() {
 }
 
 closeSpan.onclick = function() {
+    taskInput.value = "";
     taskModal.classList.remove('active');
 }
 
@@ -130,7 +134,12 @@ saveTaskBtn.onclick = function() {
 }
 
 window.onclick = function(event) {
+    taskInput.value = "";
     if (event.target == taskModal) {
         taskModal.classList.remove('active');
     }
 }
+
+// ? Notes Panel
+
+// TODO Setup Notes to have local storage so they persist across page reloads
