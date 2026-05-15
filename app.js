@@ -18,7 +18,7 @@ document.querySelectorAll('#task-list li').forEach(task => {
 
 
 // TODO: Delete Task Functionality
-document.querySelectorAll('#task-list .delete').forEach(btn => {
+document.querySelectorAll('#task-list .delete-task').forEach(btn => {
     btn.addEventListener('click', () => {
         const taskItem = btn.closest('li');
         if (taskItem) {
@@ -47,7 +47,7 @@ closeSpan.onclick = function() {
 saveTaskBtn.onclick = function() {
     var taskName = taskInput.value.trim();
     var taskList = document.getElementById('task-list');
-    const taskDeleteBtn = document.querySelectorAll('#task-list .delete')
+    const taskDeleteBtn = document.querySelectorAll('#task-list .delete-task')
 
     if (taskName === "") {
         alert("Please enter a task name.");
@@ -60,10 +60,20 @@ saveTaskBtn.onclick = function() {
     const newTaskText = document.createElement('span');
     const deleteBtn = document.createElement('span');
 
-    deleteBtn.classList.add('delete');
-    deleteBtn.id = 'delete-task';
-    deleteBtn.textContent = '\u00D7';
-  
+    deleteBtn.classList.add('delete-task');
+    const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+    svg.setAttribute("viewBox", "0 0 24 24");
+    svg.setAttribute("width", "14");
+    svg.setAttribute("height", "14");
+
+    const path = document.createElementNS("http://www.w3.org/2000/svg", "path");
+    path.setAttribute("d", "M6 6L18 18M18 6L6 18");
+    path.setAttribute("stroke", "currentColor");
+    path.setAttribute("stroke-width", "2");
+    path.setAttribute("stroke-linecap", "round");
+
+    svg.appendChild(path);
+    deleteBtn.appendChild(svg);
 
     newTaskCheckbox.type = "checkbox";
 

@@ -133,7 +133,7 @@ section button:hover {
   cursor: pointer;
 }
 
-#tasks li .delete {
+#tasks li .delete-task {
   margin-left: auto;
   cursor: pointer;
   font-size: 14px;
@@ -143,21 +143,21 @@ section button:hover {
   align-items: center;
   justify-content: center;
 
-  width: 20px;
-  height: 20px;
+  width: 22px;
+  height: 22px;
   border-radius: 6px;
 
   transition: background 0.15s, color 0.15s; 
-  line-height: 1;
-
-  padding-bottom: 1px;
-  box-sizing: border-box;
+  flex-shrink: 0;
 }
 
-#tasks li .delete:hover {
+#tasks li .delete-task svg {
+  pointer-events: none;
+}
+
+#tasks li .delete-task:hover {
   color: var(--color-text); 
   background: var(--color-delete); 
-  border: none;
 }
 
 .completed .task-text {
