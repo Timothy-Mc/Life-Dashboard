@@ -17,6 +17,17 @@ document.querySelectorAll('#task-list li').forEach(task => {
 });
 
 
+// TODO: Delete Task Functionality
+document.querySelectorAll('#task-list .delete').forEach(btn => {
+    btn.addEventListener('click', () => {
+        const taskItem = btn.closest('li');
+        if (taskItem) {
+            taskItem.remove();
+        }
+    })
+})
+
+
 // TODO: Modal Setup for adding new tasks and habits
 
 var taskModal = document.getElementById('task-modal');
@@ -36,6 +47,7 @@ closeSpan.onclick = function() {
 saveTaskBtn.onclick = function() {
     var taskName = taskInput.value.trim();
     var taskList = document.getElementById('task-list');
+    const taskDeleteBtn = document.querySelectorAll('#task-list .delete')
 
     if (taskName === "") {
         alert("Please enter a task name.");
@@ -45,11 +57,21 @@ saveTaskBtn.onclick = function() {
     const newTask = document.createElement('li');
     const newTaskLabel = document.createElement('label');
     const newTaskCheckbox = document.createElement('input');
+    const newTaskText = document.createElement('span');
+    const deleteBtn = document.createElement('span');
+
+    deleteBtn.classList.add('delete');
+    deleteBtn.id = 'delete-task';
+    deleteBtn.textContent = '\u00D7';
+  
 
     newTaskCheckbox.type = "checkbox";
 
     newTaskLabel.appendChild(newTaskCheckbox);
-    newTaskLabel.appendChild(document.createTextNode(taskName));
+    newTaskText.classList.add('task-text');
+    newTaskText.textContent = taskName;
+    newTaskLabel.appendChild(newTaskText);
+    newTaskLabel.appendChild(deleteBtn);
     newTask.appendChild(newTaskLabel);
 
 
@@ -60,6 +82,13 @@ saveTaskBtn.onclick = function() {
             newTask.classList.add('completed');
         } else {
             newTask.classList.remove('completed');
+        }
+    });
+
+    deleteBtn.addEventListener('click', function () {
+        const taskItem = deleteBtn.closest('li');
+        if (taskItem) {
+            taskItem.remove();
         }
     });
 
