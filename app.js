@@ -143,3 +143,25 @@ window.onclick = function(event) {
 // ? Notes Panel
 
 // TODO Setup Notes to have local storage so they persist across page reloads
+
+const noteInput = document.getElementById('note-textarea');
+
+function saveNotes(value) {
+    localStorage.setItem('notes', value);
+}
+
+function loadNotes() {
+    const savedNotes = localStorage.getItem('notes');
+
+    return savedNotes || '';
+}
+
+function renderNotes() {
+    noteInput.value = loadNotes();
+}
+
+noteInput.addEventListener('input', (event) => {
+    saveNotes(event.target.value);
+});
+
+renderNotes()
