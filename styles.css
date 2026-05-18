@@ -160,7 +160,7 @@ section button:hover {
   background: var(--color-delete); 
 }
 
-.completed .task-text {
+.task-item.completed   {
     text-decoration: line-through;
     color: var(--color-text-muted);
     opacity: 0.6;
