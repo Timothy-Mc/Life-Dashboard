@@ -22,90 +22,7 @@
                 <button id="add-task-btn">Add Task</button>
             </div>
 
-            <!-- Task Modal -->
-            <div id="task-modal" class="modal">
-                <div class="modal-content">
-                    <span class="close" id="close-modal">&times;</span>
-                    <h2>Add Task</h2>
-                    <input id="task-input" type="text" placeholder="New Task..." />
-                    <div class="modal-actions">
-                        <button id="save-task-btn">Save</button>
-                    </div>
-                </div>
-            </div>
-
             <ul id="task-list">
-                <!-- TODO: Add delete functionality -->
-                <!-- <li>
-                    <label>
-                        <input type="checkbox">
-                        <span class="task-text">Gym at 8pm</span>
-                        <span class="delete-task">
-                            <svg viewBox="0 0 24 24" width="14" height="14" aria-hidden="true">
-                                <path d="M6 6L18 18M18 6L6 18"
-                                    stroke="currentColor"
-                                    stroke-width="2"
-                                    stroke-linecap="round"/>
-                            </svg>
-                        </span>
-                    </label>
-                </li>
-                <li>
-                    <label>
-                        <input type="checkbox">
-                        <span class="task-text">Finish coding practice</span>
-                        <span class="delete-task">
-                            <svg viewBox="0 0 24 24" width="14" height="14" aria-hidden="true">
-                                <path d="M6 6L18 18M18 6L6 18"
-                                    stroke="currentColor"
-                                    stroke-width="2"
-                                    stroke-linecap="round"/>
-                            </svg>
-                        </span>
-                    </label>
-                </li>
-                <li>
-                    <label>
-                        <input type="checkbox">
-                        <span class="task-text">Grocery shopping</span>
-                        <span class="delete-task">
-                            <svg viewBox="0 0 24 24" width="14" height="14" aria-hidden="true">
-                                <path d="M6 6L18 18M18 6L6 18"
-                                    stroke="currentColor"
-                                    stroke-width="2"
-                                    stroke-linecap="round"/>
-                            </svg>
-                        </span>
-                    </label>
-                </li>
-                <li>
-                    <label>
-                        <input type="checkbox">
-                        <span class="task-text">Meal prep</span>
-                        <span class="delete-task">
-                            <svg viewBox="0 0 24 24" width="14" height="14" aria-hidden="true">
-                                <path d="M6 6L18 18M18 6L6 18"
-                                    stroke="currentColor"
-                                    stroke-width="2"
-                                    stroke-linecap="round"/>
-                            </svg>
-                        </span>
-                    </label>
-                </li>
-                <li>
-                    <label>
-                        <input type="checkbox">
-                        <span class="task-text">Read 20 pages</span>
-                        <span class="delete-task">
-                            <svg viewBox="0 0 24 24" width="14" height="14" aria-hidden="true">
-                                <path d="M6 6L18 18M18 6L6 18"
-                                    stroke="currentColor"
-                                    stroke-width="2"
-                                    stroke-linecap="round"/>
-                            </svg>
-                        </span>
-                    </label>
-                </li> -->
             </ul>
         </section>
     
@@ -115,67 +32,7 @@
                 <button id="add-habit-btn">Add Habit</button>
             </div>
 
-            <div class="habits-container">
-                <div class="habit" data-habit="exercise">
-                    <span class="habit-name">Exercise</span>
-                    <div class="habit-days">
-                        <span class="day-label">Mon</span>
-                        <span class="day-label">Tue</span>
-                        <span class="day-label">Wed</span>
-                        <span class="day-label">Thu</span>
-                        <span class="day-label">Fri</span>
-                        <span class="day-label">Sat</span>
-                        <span class="day-label">Sun</span>
-    
-                        <span class="day-cell" data-index="0"></span>
-                        <span class="day-cell" data-index="1"></span>
-                        <span class="day-cell" data-index="2"></span>
-                        <span class="day-cell" data-index="3"></span>
-                        <span class="day-cell" data-index="4"></span>
-                        <span class="day-cell" data-index="5"></span>
-                        <span class="day-cell" data-index="6"></span>
-                    </div>
-                </div>
-                <div class="habit" data-habit="read">
-                    <span class="habit-name">Read</span>
-                    <div class="habit-days">
-                        <span class="day-label">Mon</span>
-                        <span class="day-label">Tue</span>
-                        <span class="day-label">Wed</span>
-                        <span class="day-label">Thu</span>
-                        <span class="day-label">Fri</span>
-                        <span class="day-label">Sat</span>
-                        <span class="day-label">Sun</span>
-                        
-                        <span class="day-cell" data-index="0"></span>
-                        <span class="day-cell" data-index="1"></span>
-                        <span class="day-cell" data-index="2"></span>
-                        <span class="day-cell" data-index="3"></span>
-                        <span class="day-cell" data-index="4"></span>
-                        <span class="day-cell" data-index="5"></span>
-                        <span class="day-cell" data-index="6"></span>
-                    </div>
-                </div>
-                <div class="habit" data-habit="code">
-                    <span class="habit-name">Code</span>
-                    <div class="habit-days">
-                        <span class="day-label">Mon</span>
-                        <span class="day-label">Tue</span>
-                        <span class="day-label">Wed</span>
-                        <span class="day-label">Thu</span>
-                        <span class="day-label">Fri</span>
-                        <span class="day-label">Sat</span>
-                        <span class="day-label">Sun</span>
-                        
-                        <span class="day-cell" data-index="0"></span>
-                        <span class="day-cell" data-index="1"></span>
-                        <span class="day-cell" data-index="2"></span>
-                        <span class="day-cell" data-index="3"></span>
-                        <span class="day-cell" data-index="4"></span>
-                        <span class="day-cell" data-index="5"></span>
-                        <span class="day-cell" data-index="6"></span>
-                    </div>
-                </div>
+            <div id="habits-container">
             </div>
         </section>
     
@@ -191,5 +48,21 @@
     <footer>
         <p>Tim Mc - Built with HTML & CSS</p>
     </footer>
+
+
+    <div id="modal" class="modal">
+        <div class="modal-content">
+            <span  id="modal-close" class="close">&times;</span>
+
+            <h2 id="modal-title">Title</h2>
+
+            <input id="modal-input" type="text" placeholder="..." />
+
+            <div class="modal-actions">
+                <button id="modal-save-btn">Save</button>
+            </div>
+        </div>
+    </div>
+
 </body>
 </html>

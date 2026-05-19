@@ -1,5 +1,25 @@
 console.log("Life Dashboard Loaded")
 
+let modalMode = "";
+
+// TODO: Modal Setup
+
+const modal = document.getElementById('modal')
+const modalInput = document.getElementById('modal-input')
+const modalSaveBtn = document.getElementById('modal-save-btn')
+
+document.getElementById('add-task-btn').onclick = () => openModal('task');
+document.getElementById('add-habit-btn').onclick = () => openModal('habit');
+
+document.getElementById('modal-close').onclick = () => {
+    modalInput.value = "";
+    modal.classList.remove('active');
+}
+
+modalSaveBtn.onclick = () => {
+    if (modalMode === 'task') saveTask();
+    if (modalMode === 'habit') saveHabit();
+}
 
 // ? Task Panel
 
@@ -24,7 +44,7 @@ function loadTasks() {
 loadTasks();
 
 function renderTasks() {
-    var taskList = document.getElementById('task-list');
+    const taskList = document.getElementById('task-list');
     taskList.innerHTML = "";
 
     tasks.forEach(task => {
@@ -63,14 +83,16 @@ function renderTasks() {
         del.onclick = () => {
             tasks = tasks.filter(t => t.id !== task.id);
             saveTasks();
-            renderTasks();
+
+            li.remove();
         }
 
         // Checkbox Logic
         checkbox.onchange = () => {
             task.done = checkbox.checked;
             saveTasks();
-            renderTasks();
+
+            li.classList.toggle("completed", task.done);
         }
 
         svg.appendChild(path);
@@ -86,25 +108,8 @@ function renderTasks() {
     });
 }
 
-// TODO: Modal Setup for adding new tasks
-
-var taskModal = document.getElementById('task-modal');
-var addTaskBtn = document.getElementById('add-task-btn');
-var closeSpan = document.getElementById('close-modal');
-var saveTaskBtn = document.getElementById('save-task-btn');
-var taskInput = document.getElementById('task-input')
-
-addTaskBtn.onclick = function() {
-    taskModal.classList.add('active');
-}
-
-closeSpan.onclick = function() {
-    taskInput.value = "";
-    taskModal.classList.remove('active');
-}
-
-saveTaskBtn.onclick = function() {
-    var taskName = taskInput.value.trim();
+function saveTask() {
+    const taskName = modalInput.value.trim();
 
     if (taskName === "") {
         alert("Please enter a task name.");
@@ -118,7 +123,6 @@ saveTaskBtn.onclick = function() {
         return;
     }
     
-
     const newTask = {
         id: Date.now(),
         text: taskName,
@@ -130,14 +134,14 @@ saveTaskBtn.onclick = function() {
     saveTasks();
     renderTasks();
 
-    taskInput.value = "";
-    taskModal.classList.remove('active');
+    modalInput.value = "";
+    modal.classList.remove('active');
 }
 
 window.onclick = function(event) {
-    taskInput.value = "";
-    if (event.target == taskModal) {
-        taskModal.classList.remove('active');
+    modalInput.value = "";
+    if (event.target == modal) {
+        modal.classList.remove('active');
     }
 }
 
@@ -171,13 +175,9 @@ renderNotes()
 
 // TODO: Store habits as an object
 let habits = {};
-// let habits = {
-//     exercise: [false, false, false, false, false, false, false],
-//     read: [false, false, false, false, false, false, false],
-//     code: [false, false, false, false, false, false, false]
-// };
 
 // TODO: Render the habit grid from this data
+const days = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
 
 function saveHabits() {
     localStorage.setItem('habits', JSON.stringify(habits));
@@ -188,113 +188,113 @@ function loadHabits() {
 
     if (savedHabits) {
         habits = JSON.parse(savedHabits);
-        renderHabits();
     } else {
         // habits = {};
-        habits = {
-            exercise: [false, false, false, false, false, false, false],
-            read: [false, false, false, false, false, false, false],
-            code: [false, false, false, false, false, false, false]
-        };
+        habits = {};
     }
 }
 
-loadHabits();
-
 function renderHabits() {
-    // 1. Get the container where all habits live
-    // (this is your #habits-container or whatever you named it)
     const habitContainer = document.getElementById('habits-container');
 
-     // 2. Clear existing HTML inside the container
-    // (so you don’t duplicate habits every render)
+
     habitContainer.innerHTML = "";
 
-    // 3. Loop through your habits object
-    // (use Object.entries or Object.keys)
-    Object.keys(habits).forEach(habitName => {
-        // 4. For each habit:
-        //    - create a parent div (.habit)
-        //    - set data-habit attribute
+
+    Object.entries(habits).forEach(([habitName, daysArray]) => {
+
         const habitDiv = document.createElement('div');
         habitDiv.classList.add('habit')
-        habitDiv.dataset.habit(habitName.text.toLowerCase())
+        habitDiv.dataset.habit = habitName;
 
-        // 5. Create and add habit name element
-        //    - span or div for the title
-        //    - set text content
         const habitSpan = document.createElement('span');
         habitSpan.classList.add('habit-name');
-        habitSpan.textContent = habitName.text;
 
-        // 6. Create the "habit-days" container
+        habitSpan.textContent = formatHabitName(habitName);
 
+        const habitDays = document.createElement('div');
+        habitDays.classList.add('habit-days')
 
+        days.forEach(day => {
+            const label = document.createElement('span');
+            label.classList.add('day-label');
+            label.textContent = day;
+            habitDays.appendChild(label);
+        });
 
-        // 7. Create 7 day labels (Mon–Sun)
-        //    (optional here if you already have static labels in HTML)
+        if (!Array.isArray(habits[habitName])) return;
+        habits[habitName].forEach((completed, index) => {
 
+            const cell = document.createElement('span');
+            cell.classList.add('day-cell');
+            cell.dataset.index = index;
 
+            if (completed) {
+                cell.classList.add('completed');
+            }
 
-        // 8. Loop through the 7 boolean values for this habit
-        //    (true/false array)
+            cell.addEventListener('click', (e) => {
+                habits[habitName][index] = !habits[habitName][index];
 
+                cell.classList.toggle('completed', habits[habitName][index]);
 
+                saveHabits();
+            });
 
-            // 9. For each day:
-            //    - create a day-cell span
-            //    - set data-index
+            habitDays.appendChild(cell);
+        });
 
+        habitDiv.appendChild(habitSpan);
+        habitDiv.appendChild(habitDays);
 
-
-            // 10. If value is true:
-            //     - add "completed" class
-
-
-
-            // 11. Add click listener to toggle:
-            //     - update habits object
-            //     - update class
-            //     - optionally save to localStorage
-
-
-
-        // 12. Append day cells to habit-days container
-
-
-
-        // 13. Append habit-name + habit-days to habit container
-
-
-
-        // 14. Append full habit block to main container
+        habitContainer.appendChild(habitDiv);
     })
 }
 
-document.querySelectorAll('.day-cell').forEach(cell => {
-    cell.addEventListener('click', (e) => {
-        const habitElement = e.target.closest('.habit');
-        const habitName = habitElement.dataset.habit;
-
-        // console.log(habitElement);
-        
-        const dayIndex = parseInt(cell.dataset.index); 
-
-        if (!(habitName in habits)) return;   
-
-        const newValue = !habits[habitName][dayIndex];
-        // console.log(newValue);
-        habits[habitName][dayIndex] = newValue;
-
-
-        e.target.classList.toggle("completed", newValue);
-
-        // console.log(habits[habitName]);
-        // console.log(habitName);
-    });
-});
-
+loadHabits();
+renderHabits();
 
 // TODO: Add a click listener to each cell
+function saveHabit() {
+    const habitName = modalInput.value.trim();
+    
+    
+    if (habitName === "") {
+        alert("Please enter a Habit name.");
+        return;
+    }
+    
+    const key = habitName.toLowerCase().replace(/ /g, '_');
 
-// TODO: Modal Setup for adding new habits
+    if (Object.hasOwn(habits, key)) {
+        alert("Habit already exists!");
+        return;
+    }
+    
+    habits[key] = [false, false, false, false, false, false, false];
+
+    saveHabits();
+    renderHabits();
+
+    modalInput.value = "";
+    modal.classList.remove('active');
+}
+
+
+// ? Helper Functions
+
+function formatHabitName(name) {
+    return name
+        .replace(/_/g, ' ')
+        .replace(/\b\w/g, c => c.toUpperCase());
+}
+
+function openModal(mode) {
+    modalMode = mode;
+    const modalTitle = document.getElementById('modal-title')
+
+    modalTitle.textContent = mode === "task" ? "Add Task" : "Add Habit";
+    modalInput.placeholder = mode === "task" ? "New task..." : "New habit...";
+
+    modal.classList.add('active');
+}
