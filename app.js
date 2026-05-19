@@ -196,38 +196,56 @@ function loadHabits() {
 
 function renderHabits() {
     const habitContainer = document.getElementById('habits-container');
-
+    const todayIndex = getTodayIndex();
+    
 
     habitContainer.innerHTML = "";
 
 
     Object.entries(habits).forEach(([habitName, daysArray]) => {
+        const streaks = getStreak(habits[habitName]);
 
         const habitDiv = document.createElement('div');
         habitDiv.classList.add('habit')
         habitDiv.dataset.habit = habitName;
 
+        const habitHeader = document.createElement('div');
+        habitHeader.classList.add('habit-header')
+
         const habitSpan = document.createElement('span');
         habitSpan.classList.add('habit-name');
-
         habitSpan.textContent = formatHabitName(habitName);
+
+        const streaksSpan = document.createElement('span')
+        streaksSpan.classList.add('habit-streak');
+        streaksSpan.textContent = `🔥 ${streaks}`;
+
+        habitHeader.appendChild(habitSpan);
+        habitHeader.appendChild(streaksSpan);
 
         const habitDays = document.createElement('div');
         habitDays.classList.add('habit-days')
 
-        days.forEach(day => {
+        days.forEach((day,index) => {
             const label = document.createElement('span');
             label.classList.add('day-label');
             label.textContent = day;
+
+            if (index === todayIndex) label.classList.add('today');
+
             habitDays.appendChild(label);
         });
 
+
         if (!Array.isArray(habits[habitName])) return;
+
         habits[habitName].forEach((completed, index) => {
 
             const cell = document.createElement('span');
             cell.classList.add('day-cell');
             cell.dataset.index = index;
+
+            if (index === todayIndex) cell.classList.add('today');
 
             if (completed) {
                 cell.classList.add('completed');
@@ -239,15 +257,19 @@ function renderHabits() {
                 cell.classList.toggle('completed', habits[habitName][index]);
 
                 saveHabits();
+                renderHabits();
             });
 
             habitDays.appendChild(cell);
         });
 
-        habitDiv.appendChild(habitSpan);
+        habitDiv.appendChild(habitHeader);
         habitDiv.appendChild(habitDays);
 
         habitContainer.appendChild(habitDiv);
+
+
+
     })
 }
 
@@ -263,7 +285,7 @@ function saveHabit() {
         alert("Please enter a Habit name.");
         return;
     }
-    
+
     const key = habitName.toLowerCase().replace(/ /g, '_');
 
     if (Object.hasOwn(habits, key)) {
@@ -280,6 +302,28 @@ function saveHabit() {
     modal.classList.remove('active');
 }
 
+function getStreak(daysCompleted) {
+    const todayIndex = getTodayIndex();
+
+    console.log(daysCompleted)
+
+    let streaks = 0;
+
+    for (let i = todayIndex; i >= 0; i--) {
+        console.log('here')
+        if (daysCompleted[i] === true) {
+            streaks++;
+            console.log('there')
+        } else {
+            console.log('no')
+            break;
+        }
+
+        console.log(streaks);
+    }
+
+    return streaks;
+}
 
 // ? Helper Functions
 
@@ -297,4 +341,10 @@ function openModal(mode) {
     modalInput.placeholder = mode === "task" ? "New task..." : "New habit...";
 
     modal.classList.add('active');
+}
+
+function getTodayIndex() {
+    const day = new Date().getDay();
+
+    return day === 0 ? 6 : day - 1;
 }

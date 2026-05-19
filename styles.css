@@ -19,6 +19,9 @@
 
   --color-delete: #EF4444;
 
+  --color-streaks: #f59e0b;
+  --color-streaks-bg: #312b1f;
+
   --radius: 10px;
   --gap: 1.25rem;
 }
@@ -293,17 +296,31 @@ section button:hover {
 }
 
 .habit-name {
-  display: block;
   font-size: 13px;
   font-weight: 500;
   color: var(--color-text);
-  margin-bottom: 6px;
 }
 
 .habit-days {
   display: grid;
   grid-template-columns: repeat(7, 1fr);
   gap: 4px;
+}
+
+.habit-streak {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--color-streaks);
+  background: var(--color-streaks-bg);
+  padding: 2px 8px;
+  border-radius: 999px;
+}
+
+.habit-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 6px;
 }
 
 .day-label {
@@ -327,6 +344,15 @@ section button:hover {
 
 .day-cell.completed {
   background: var(--color-accent);
+  border-color: var(--color-accent);
+}
+
+.day-label.today {
+    color: var(--color-accent);
+    font-weight: 600;
+}
+
+.day-cell.today {
   border-color: var(--color-accent);
 }
 
