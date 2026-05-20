@@ -1,8 +1,10 @@
 console.log("Life Dashboard Loaded")
 
 let modalMode = "";
-
 // TODO: Modal Setup
+
+// task filter state
+let currentFilter = 'all';
 
 const modal = document.getElementById('modal')
 const modalInput = document.getElementById('modal-input')
@@ -20,6 +22,13 @@ modalSaveBtn.onclick = () => {
     if (modalMode === 'task') saveTask();
     if (modalMode === 'habit') saveHabit();
 }
+
+modalInput.addEventListener('keydown', (e) => {
+    if  (e.key === 'Enter') {
+        if (modalMode === 'task') saveTask();
+        if (modalMode === 'habit') saveHabit();
+    }
+});
 
 // ? Task Panel
 
@@ -47,7 +56,35 @@ function renderTasks() {
     const taskList = document.getElementById('task-list');
     taskList.innerHTML = "";
 
-    tasks.forEach(task => {
+    // empty state when no tasks exist
+    if (tasks.length === 0) {
+        const empty = document.createElement('div');
+        empty.classList.add('task-empty');
+        empty.textContent = 'No tasks yet. Add one above.';
+        taskList.appendChild(empty);
+        return;
+    }
+
+    // sort so completed sink to bottom
+    tasks.sort((a, b) => a.done - b.done);
+
+    // filter based on currentFilter
+    let visible = tasks;
+    if (currentFilter === 'active') visible = tasks.filter(t => !t.done);
+    if (currentFilter === 'completed') visible = tasks.filter(t => t.done);
+
+    // if filter yields no results, show a helpful message
+    if (visible.length === 0) {
+        const empty = document.createElement('div');
+        empty.classList.add('task-empty');
+        if (currentFilter === 'active') empty.textContent = 'No active tasks.';
+        else if (currentFilter === 'completed') empty.textContent = 'No completed tasks.';
+        else empty.textContent = 'No tasks yet. Add one above.';
+        taskList.appendChild(empty);
+        return;
+    }
+
+    visible.forEach(task => {
         const li = document.createElement('li');
         li.classList.add('task-item')
 
@@ -66,7 +103,8 @@ function renderTasks() {
         text.textContent = task.text;
 
         const del = document.createElement('span');
-        del.classList.add('delete-task');
+        del.classList.add('task-del');
+        del.classList.add('delete-btn');
 
         // Delete Logic
         const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
@@ -82,18 +120,26 @@ function renderTasks() {
 
         del.onclick = () => {
             tasks = tasks.filter(t => t.id !== task.id);
+            if (!confirm('Delete task?')) return;
             saveTasks();
-
-            li.remove();
+            renderTasks();
         }
 
         // Checkbox Logic
         checkbox.onchange = () => {
-            task.done = checkbox.checked;
-            saveTasks();
-
-            li.classList.toggle("completed", task.done);
+            // find the task in the main array and update
+            const t = tasks.find(x => x.id === task.id);
+            if (t) {
+                t.done = checkbox.checked;
+                saveTasks();
+                renderTasks();
+            }
         }
+
+        
+        if (tasks.length === 0) {
+            
+        } 
 
         svg.appendChild(path);
         del.appendChild(svg);
@@ -104,7 +150,6 @@ function renderTasks() {
 
         li.appendChild(label)
         taskList.appendChild(li)
-
     });
 }
 
@@ -176,6 +221,20 @@ renderNotes()
 // TODO: Store habits as an object
 let habits = {};
 
+
+// habit edit mode
+let habitEditMode = false;
+
+const editHabitBtn = document.getElementById('edit-habit')
+
+editHabitBtn.onclick = () => {
+    habitEditMode = !habitEditMode;
+    editHabitBtn.classList.toggle('active', habitEditMode);
+    editHabitBtn.textContent = habitEditMode ? 'Done' : 'Edit';
+    renderHabits();
+}
+
+
 // TODO: Render the habit grid from this data
 const days = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
 
@@ -189,7 +248,6 @@ function loadHabits() {
     if (savedHabits) {
         habits = JSON.parse(savedHabits);
     } else {
-        // habits = {};
         habits = {};
     }
 }
@@ -201,6 +259,14 @@ function renderHabits() {
 
     habitContainer.innerHTML = "";
 
+    if (Object.keys(habits).length === 0) {
+        const empty = document.createElement('div');
+        empty.classList.add('task-empty');
+        empty.textContent = 'No habits yet. Add one above.';
+        habitContainer.appendChild(empty);
+        return;
+    }
+
 
     Object.entries(habits).forEach(([habitName, daysArray]) => {
         const streaks = getStreak(habits[habitName]);
@@ -209,6 +275,8 @@ function renderHabits() {
         habitDiv.classList.add('habit')
         habitDiv.dataset.habit = habitName;
 
+        if (habitEditMode) habitDiv.classList.add('editing');
+
         const habitHeader = document.createElement('div');
         habitHeader.classList.add('habit-header')
 
@@ -216,12 +284,36 @@ function renderHabits() {
         habitSpan.classList.add('habit-name');
         habitSpan.textContent = formatHabitName(habitName);
 
+        const actionsDiv = document.createElement('div');
+        actionsDiv.classList.add('habit-actions');
+
         const streaksSpan = document.createElement('span')
         streaksSpan.classList.add('habit-streak');
         streaksSpan.textContent = `🔥 ${streaks}`;
 
+        const habitDel = document.createElement('span')
+        habitDel.classList.add('habit-del');
+        habitDel.classList.add('delete-btn');
+
+        const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+        svg.setAttribute("viewBox", "0 0 24 24");
+        svg.setAttribute("width", "14");
+        svg.setAttribute("height", "14");
+
+        const path = document.createElementNS("http://www.w3.org/2000/svg", "path");
+        path.setAttribute("d", "M6 6L18 18M18 6L6 18");
+        path.setAttribute("stroke", "currentColor");
+        path.setAttribute("stroke-width", "2");
+        path.setAttribute("stroke-linecap", "round");
+
+        svg.appendChild(path)
+        habitDel.appendChild(svg)
+
+        actionsDiv.appendChild(streaksSpan);
+        actionsDiv.appendChild(habitDel);
+        
         habitHeader.appendChild(habitSpan);
-        habitHeader.appendChild(streaksSpan);
+        habitHeader.appendChild(actionsDiv);
 
         const habitDays = document.createElement('div');
         habitDays.classList.add('habit-days')
@@ -263,14 +355,64 @@ function renderHabits() {
             habitDays.appendChild(cell);
         });
 
+        // enable renaming when in edit mode for this habit
+        if (habitEditMode) {
+            habitSpan.contentEditable = true;
+            habitSpan.classList.add('editable');
+
+            const originalKey = habitName;
+
+            habitSpan.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter') {
+                    e.preventDefault();
+                    habitSpan.blur();
+                }
+            });
+
+            habitSpan.addEventListener('blur', () => {
+                const newText = habitSpan.textContent.trim();
+
+                if (!newText) {
+                    habitSpan.textContent = formatHabitName(originalKey);
+                    return;
+                }
+
+                const newKey = newText.toLowerCase().replace(/ /g, '_');
+
+                if (newKey === originalKey) return;
+
+                if (Object.hasOwn(habits, newKey)) {
+                    alert('Habit already exists!');
+                    habitSpan.textContent = formatHabitName(originalKey);
+                    return;
+                }
+
+                habits[newKey] = habits[originalKey];
+                delete habits[originalKey];
+                saveHabits();
+                renderHabits();
+            });
+        } else {
+            habitSpan.contentEditable = false;
+            habitSpan.classList.remove('editable');
+        }
+
+        // delete only in edit mode
+        habitDel.onclick = () => {
+            if (!habitEditMode) return;
+            if (!confirm('Delete habit?')) return;
+            delete habits[habitName];
+            saveHabits();
+            renderHabits();
+        }
+
         habitDiv.appendChild(habitHeader);
         habitDiv.appendChild(habitDays);
 
         habitContainer.appendChild(habitDiv);
 
-
-
     })
+
 }
 
 loadHabits();
@@ -347,4 +489,28 @@ function getTodayIndex() {
     const day = new Date().getDay();
 
     return day === 0 ? 6 : day - 1;
+}
+// filter buttons
+const filterAllBtn = document.getElementById('filter-all')
+const filterActiveBtn = document.getElementById('filter-active')
+const filterCompletedBtn = document.getElementById('filter-completed')
+const clearCompletedBtn = document.getElementById('clear-completed-btn')
+
+function setFilter(filter) {
+    currentFilter = filter;
+    // toggle active state using toggle with condition
+    filterAllBtn.classList.toggle('active', filter === 'all');
+    filterActiveBtn.classList.toggle('active', filter === 'active');
+    filterCompletedBtn.classList.toggle('active', filter === 'completed');
+    renderTasks();
+}
+
+filterAllBtn.onclick = () => setFilter('all');
+filterActiveBtn.onclick = () => setFilter('active');
+filterCompletedBtn.onclick = () => setFilter('completed');
+clearCompletedBtn.onclick = () => {
+    // remove completed tasks
+    tasks = tasks.filter(t => !t.done);
+    saveTasks();
+    renderTasks();
 }

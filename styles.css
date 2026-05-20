@@ -97,6 +97,33 @@ section button {
 section button:hover {
     background: var(--color-accent-light);
 }
+
+.delete-btn {
+  cursor: pointer;
+  font-size: 12px;
+  color: var(--color-text-muted);
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 22px;
+  height: 22px;
+  border-radius: 6px;
+
+  transition: background 0.15s, color 0.15s;
+  flex-shrink: 0;
+}
+
+.delete-btn svg {
+  pointer-events: none;
+}
+
+.delete-btn:hover {
+  color: var(--color-text);
+  background: var(--color-delete);
+}
+
 /*  Tasks panel  */
 #tasks ul {
   list-style: none;
@@ -136,31 +163,8 @@ section button:hover {
   cursor: pointer;
 }
 
-#tasks li .delete-task {
+#tasks li .task-del {
   margin-left: auto;
-  cursor: pointer;
-  font-size: 14px;
-  color: var(--color-text-muted);
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  width: 22px;
-  height: 22px;
-  border-radius: 6px;
-
-  transition: background 0.15s, color 0.15s; 
-  flex-shrink: 0;
-}
-
-#tasks li .delete-task svg {
-  pointer-events: none;
-}
-
-#tasks li .delete-task:hover {
-  color: var(--color-text); 
-  background: var(--color-delete); 
 }
 
 .task-item.completed   {
@@ -179,6 +183,39 @@ section button:hover {
     position: sticky;
     top: 0;
     background: var(--color-surface);
+}
+
+.task-filters {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 0.75rem;
+}
+
+.filter-btn {
+  background: transparent;
+  color: var(--color-text-muted);
+  border: 1px solid transparent;
+  padding: 6px 10px;
+  border-radius: 6px;
+  font-size: 12px;
+  cursor: pointer;
+}
+
+.filter-btn.active {
+  background: var(--color-accent);
+  color: #fff;
+}
+
+.clear-btn {
+  background: transparent;
+  border: 1px solid var(--color-border);
+  color: var(--color-text-muted);
+}
+
+.task-empty {
+  padding: 12px;
+  color: var(--color-text-muted);
+  font-size: 13px;
 }
 
 /*  Modal  */
@@ -320,7 +357,19 @@ section button:hover {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: 6px;
+  margin-bottom: 8px;
+}
+
+.habit-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.habit-btns {
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }
 
 .day-label {
@@ -345,6 +394,33 @@ section button:hover {
 .day-cell.completed {
   background: var(--color-accent);
   border-color: var(--color-accent);
+}
+
+/* hide habit delete by default; show in edit mode */
+.habit-del {
+  display: none;
+  cursor: pointer;
+  width: 22px;
+  height: 22px;
+  align-items: center;
+  justify-content: center;
+}
+
+.habit.editing .habit-del {
+  display: flex;
+}
+
+/* editable habit name styling */
+.habit-name.editable {
+  padding: 2px 6px;
+  border-radius: 6px;
+  outline: 2px solid rgba(16,185,129,0.12);
+}
+
+/* edit button active (editing) */
+#edit-habit.active {
+  background: #10B981;
+  color: #fff;
 }
 
 .day-label.today {
