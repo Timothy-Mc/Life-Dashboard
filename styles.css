@@ -6,8 +6,8 @@
 }
 
 :root {
-  --color-accent: #3B82F6;      /* main blue */
-  --color-accent-light: #1E3A5F; /* dark blue surface */
+  --color-accent: #3B82F6;
+  --color-accent-light: #1962ff;
 
   --color-bg: #121216;
   --color-surface: #1C1C22;

@@ -1,6 +1,14 @@
 console.log("Life Dashboard Loaded")
 
 let modalMode = "";
+
+// In app.js
+const dateEl = document.querySelector('header p');
+const today = new Date();
+dateEl.textContent = today.toLocaleDateString('en-GB', {
+    day: 'numeric', month: 'long', year: 'numeric'
+});
+
 // TODO: Modal Setup
 
 // task filter state
@@ -29,6 +37,19 @@ modalInput.addEventListener('keydown', (e) => {
         if (modalMode === 'habit') saveHabit();
     }
 });
+
+
+window.onclick = function(event) {
+    modalInput.value = "";
+    if (event.target == modal) {
+        modal.classList.remove('active');
+    }
+}
+
+document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') modal.classList.remove('active');
+});
+
 
 // ? Task Panel
 
@@ -119,8 +140,8 @@ function renderTasks() {
         path.setAttribute("stroke-linecap", "round");
 
         del.onclick = () => {
-            tasks = tasks.filter(t => t.id !== task.id);
             if (!confirm('Delete task?')) return;
+            tasks = tasks.filter(t => t.id !== task.id);
             saveTasks();
             renderTasks();
         }
@@ -135,11 +156,6 @@ function renderTasks() {
                 renderTasks();
             }
         }
-
-        
-        if (tasks.length === 0) {
-            
-        } 
 
         svg.appendChild(path);
         del.appendChild(svg);
@@ -181,13 +197,6 @@ function saveTask() {
 
     modalInput.value = "";
     modal.classList.remove('active');
-}
-
-window.onclick = function(event) {
-    modalInput.value = "";
-    if (event.target == modal) {
-        modal.classList.remove('active');
-    }
 }
 
 // ? Notes Panel
@@ -446,22 +455,14 @@ function saveHabit() {
 
 function getStreak(daysCompleted) {
     const todayIndex = getTodayIndex();
-
-    console.log(daysCompleted)
-
     let streaks = 0;
 
     for (let i = todayIndex; i >= 0; i--) {
-        console.log('here')
         if (daysCompleted[i] === true) {
             streaks++;
-            console.log('there')
         } else {
-            console.log('no')
             break;
         }
-
-        console.log(streaks);
     }
 
     return streaks;
