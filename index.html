@@ -6,7 +6,7 @@
     <title>Life Dashboard</title>
     <link rel="stylesheet" href="styles.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&display=swap" rel="stylesheet">  
-    <script src="app.js" defer></script>
+    <script type="module" src="./js/app.js" defer></script>
 </head>
 <body>
     <header>
@@ -19,7 +19,11 @@
         <section id="tasks">
             <div class="header-row">
                 <h2>Tasks</h2>
-                <button id="add-task-btn">Add Task</button>
+                <div class="task-btns">
+                    <button id="add-task-btn">Add Task</button>
+                    <button id="edit-task-btn">Edit</button>
+                </div>
+
             </div>
 
             <div class="task-filters" aria-label="Task filters">

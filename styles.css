@@ -83,19 +83,22 @@ section h2 {
   margin-bottom: 1rem;
 }
 
-section button {
-    background: var(--color-accent);
-    color: #fff;
-    border: none;
-    border-radius: 6px;
-    padding: 6px 12px;
-    font-size: 12px;
-    cursor: pointer;
-    transition: background 0.15s;
+/* Shared button styles (used by panel and modal buttons) */
+section button,
+.modal-content button {
+  background: var(--color-accent);
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  padding: 6px 12px;
+  font-size: 12px;
+  cursor: pointer;
+  transition: background 0.15s;
 }
 
+.modal-content button:hover,
 section button:hover {
-    background: var(--color-accent-light);
+  background: var(--color-accent-light);
 }
 
 .delete-btn {
@@ -156,6 +159,12 @@ section button:hover {
   margin-right: 8px;
 }
 
+/* disabled checkbox styling when editing */
+#tasks input[type="checkbox"][disabled] {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
 #tasks li label {
   display: flex;
   align-items: center;
@@ -166,6 +175,58 @@ section button:hover {
 #tasks li .task-del {
   margin-left: auto;
 }
+
+.task-btns {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.task-del {
+  display: none;
+  cursor: pointer;
+  width: 22px;
+  height: 22px;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ensure delete icon sits at the far right of task rows */
+#tasks .delete-btn {
+  margin-left: auto;
+}
+
+/* allow task text to take remaining space and truncate */
+#tasks .task-text {
+  flex: 1 1 auto;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.task-item.editing .task-del {
+  display: flex;
+}
+
+/* editable task name styling */
+.task-text.editable {
+  display: inline-block;
+  flex: 0 0 auto;
+  padding: 2px 6px;
+  border-radius: 6px;
+  outline: 2px solid rgba(16,185,129,0.12);
+  max-width: calc(100% - 80px);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* edit button active (editing) */
+#edit-task-btn.active {
+  background: #10B981;
+  color: #fff;
+}
+
 
 .task-item.completed   {
     text-decoration: line-through;
@@ -412,9 +473,12 @@ section button:hover {
 
 /* editable habit name styling */
 .habit-name.editable {
+  display: inline-block;
+  flex: 0 0 auto;
   padding: 2px 6px;
   border-radius: 6px;
   outline: 2px solid rgba(16,185,129,0.12);
+  max-width: 100%;
 }
 
 /* edit button active (editing) */

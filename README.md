@@ -25,7 +25,7 @@ Responsive dashboard layout built with semantic HTML, CSS custom properties, Fle
 
 ---
 
-### Phase 2 — JavaScript · `in progress`
+### Phase 2 — JavaScript · `completed`
 Full interactivity added in vanilla JS. Tasks can be added, completed, deleted, and filtered. Habits toggle on click with live streak calculation. Notes persist via localStorage.
 
 **Skills:** DOM manipulation, event listeners, localStorage, array methods (filter, sort, map), Date API
@@ -84,7 +84,7 @@ Instructions will be added here once the React build is set up.
 
 ## Live demo
 
-[yourusername.github.io/life-dashboard](https://yourusername.github.io/life-dashboard)
+[Timothy-Mc.github.io/life-dashboard](https://Timothy-Mc.github.io/life-dashboard)
 
 ---
 
