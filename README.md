@@ -32,7 +32,7 @@ Full interactivity added in vanilla JS. Tasks can be added, completed, deleted, 
 
 ---
 
-### Phase 3 — React · `upcoming`
+### Phase 3 — React · `in progress`
 Full frontend rebuild using React. Component-based architecture, React Router for multi-page navigation, Context API for dark mode, habit completion chart.
 
 **Skills:** React, JSX, hooks (useState, useEffect, useContext), React Router, Vite
@@ -77,8 +77,37 @@ Full security audit of the Phase 4 app. OWASP Top 10 testing, vulnerability iden
 2. Open `index.html` in VS Code
 3. Run with the Live Server extension — right-click `index.html` → **Open with Live Server**
 
-### Phase 3+ (coming soon)
-Instructions will be added here once the React build is set up.
+### Phase 3 — Frontend (React + Vite)
+The frontend is a Vite + React app located in the `frontend/` folder. To run or build it locally:
+
+- Install dependencies (from project root):
+
+```bash
+cd frontend
+npm install
+```
+
+- Run the dev server:
+
+```bash
+npm run dev
+```
+
+- Build for production:
+
+```bash
+npm run build
+```
+
+- Preview the built site locally:
+
+```bash
+npm run preview
+```
+
+Notes:
+- Node 18+ and npm (or pnpm/yarn) are recommended.
+- The `frontend/package.json` includes `dev`, `build`, and `preview` scripts using Vite.
 
 ---
 
@@ -117,3 +146,14 @@ Instructions will be added here once the React build is set up.
 ## Author
 
 Built by Timothy McLeod as a self-directed learning project covering web development and cybersecurity fundamentals.
+
+---
+
+**Contributing**
+
+- Bug reports and small PRs welcome. Open issues for larger feature discussions.
+- Run the frontend locally (see above) and include clear repro steps in PR descriptions.
+
+**License**
+
+This repository does not currently include a license file — add one if you want to permit reuse.

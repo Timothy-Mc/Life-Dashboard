@@ -1,1 +1,34 @@
-old-app.js
+# Node modules
+**/node_modules/
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+*.log
+
+# Environment files
+.env
+.env.*
+
+# Build output
+dist/
+frontend/dist/
+.vite/
+frontend/.vite/
+build/
+
+# Coverage
+coverage/
+
+# Editor directories and OS files
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# Temp files
+.cache/
+.tmp/
+
