@@ -190,7 +190,7 @@ section button:hover {
     margin-top: 8px;
 }
 
-.task-btns {
+.header-btns {
   display: flex;
   align-items: center;
   gap: 8px;
@@ -273,7 +273,7 @@ section button:hover {
 }
 
 /* edit button active (editing) */
-#edit-task-btn.active {
+#edit-btn.active {
   background: #10B981;
   color: #fff;
 }
@@ -434,117 +434,129 @@ section button:hover {
 .modal-content .close:hover {
     color: var(--color-text);
 }
-
-/*  Habits panel  */
-.habit {
-  margin-bottom: 1rem;
+/* Habits panel  */
+#habits .habit-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 8px; /* Tightly stack your new habit rows */
+  padding: 0;
+  margin: 0;
 }
 
-.habit:last-child {
-  margin-bottom: 0;
-}
-
-.habit-name {
-  font-size: 13px;
-  font-weight: 500;
-  color: var(--color-text);
-}
-
-.habit-days {
-  display: grid;
-  grid-template-columns: repeat(7, 1fr);
-  gap: 4px;
-}
-
-.habit-streak {
-  font-size: 12px;
-  font-weight: 600;
-  color: var(--color-streaks);
-  background: var(--color-streaks-bg);
-  padding: 2px 8px;
-  border-radius: 999px;
-}
-
-.habit-header {
+.habit-item {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: 8px;
+  padding: 10px 8px;
+  border-radius: 6px;
+  transition: background 0.15s;
 }
 
-.habit-actions {
+.habit-item:hover {
+  background: rgba(255, 255, 255, 0.02); /* Very subtle hover feedback */
+}
+
+/* Meta: Grouping text/input and streak badges on the left */
+.habit-meta {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 10px;
+  flex: 1 1 auto;
+  min-width: 0; /* Layout guard for text truncation */
 }
 
-.habit-btns {
-  display: flex;
-  align-items: center;
-  gap: 8px;
+.habit-text {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--color-text);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
-.day-label {
-  font-size: 10px;
-  color: var(--color-text-muted);
-  text-align: center;
-}
-
-.day-cell {
-  aspect-ratio: 1;
+.streak-badge {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--color-streaks);
+  background: var(--color-streaks-bg);
+  padding: 2px 6px;
   border-radius: 4px;
-  border: 1px solid var(--color-border);
-  background: var(--color-bg);
-  cursor: pointer;
-  transition: background 0.15s, border-color 0.15s;
+  white-space: nowrap;
 }
 
-.day-cell:hover {
-  border-color: var(--color-accent);
+/* Horizontal Day Button Grouping */
+.habit-days-row {
+  display: flex;
+  gap: 5px;
+  align-items: center;
+  margin-left: 12px;
+  flex-shrink: 0; /* Prevents calendar nodes from compressing */
 }
 
-.day-cell.completed {
-  background: var(--color-accent);
-  border-color: var(--color-accent);
-}
-
-/* hide habit delete by default; show in edit mode */
-.habit-del {
-  display: none;
-  cursor: pointer;
-  width: 22px;
-  height: 22px;
+/* Small, elegant circular tracker node */
+.day-node {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%; /* Perfect Circle */
+  font-size: 11px;
+  font-weight: 600;
+  display: flex;
   align-items: center;
   justify-content: center;
+  cursor: pointer;
+  border: 1px solid var(--color-border);
+  background: var(--color-bg);
+  color: var(--color-text-muted);
+  transition: all 0.15s ease;
+  user-select: none;
 }
 
-.habit.editing .habit-del {
-  display: flex;
+.day-node:hover:not(:disabled) {
+  border-color: var(--color-accent);
+  color: var(--color-text);
 }
 
-/* editable habit name styling */
-.habit-name.editable {
-  display: inline-block;
-  flex: 0 0 auto;
-  padding: 2px 6px;
-  border-radius: 6px;
-  outline: 2px solid rgba(16,185,129,0.12);
-  max-width: 100%;
-}
-
-/* edit button active (editing) */
-#edit-habit.active {
-  background: #10B981;
+/* Checked / Completed Day State */
+.day-node.checked {
+  background: var(--color-accent);
+  border-color: var(--color-accent);
   color: #fff;
 }
 
-.day-label.today {
-    color: var(--color-accent);
-    font-weight: 600;
+.day-node.checked:hover:not(:disabled) {
+  background: var(--color-accent-light);
+  border-color: var(--color-accent-light);
 }
 
-.day-cell.today {
-  border-color: var(--color-accent);
+/* Highlight Indicator for Today (Vibrant Blue Ring) */
+.day-node.today {
+  border: 2px solid var(--color-accent) !important;
+  color: var(--color-text);
+}
+
+/* Soft gray overlay locking clicks during edit mode structural adjustments */
+.day-node:disabled {
+  cursor: not-allowed;
+  opacity: 0.3;
+}
+
+/* Inline Staging Input updates */
+.habit-item .edit-bar {
+  display: flex;
+  flex: 1;
+  max-width: 180px;
+}
+
+/* Delete Button configuration */
+.habit-del {
+  display: none; /* Hidden unless row parent enters active .editing state */
+  margin-left: 10px;
+  flex-shrink: 0;
+}
+
+.habit-item.editing .habit-del {
+  display: flex;
 }
 
 /*  Notes panel  */

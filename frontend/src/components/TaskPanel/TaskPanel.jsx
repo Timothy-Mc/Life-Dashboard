@@ -1,10 +1,9 @@
 import { useState, useEffect, useRef } from 'react'
 import TaskItem from './TaskItem'
+import useLocalStorage from '../../hooks/useLocalStorage'
  
 function TaskPanel() {
-    const [tasks, setTasks] = useState(() => {
-        return JSON.parse(localStorage.getItem('tasks')) || []
-    });
+    const [tasks, setTasks] = useLocalStorage('tasks', [])
  
     const [isEditing, setIsEditing] = useState(false);
     const [draftTasks, setDraftTasks] = useState([]);
@@ -12,10 +11,6 @@ function TaskPanel() {
     const [newText, setNewText] = useState('');
     const [error, setError] = useState('');
     const inputRef = useRef(null);
- 
-    useEffect(() => {
-        localStorage.setItem('tasks', JSON.stringify(tasks));
-    }, [tasks]);
  
     useEffect(() => {
         if (isAdding && inputRef.current) inputRef.current.focus();
@@ -100,20 +95,20 @@ function TaskPanel() {
         <section id="tasks">
             <div className="header-row">
                 <h2>Tasks</h2>
-                <div className="task-btns">
+                <div className="header-btns">
                     {!isEditing && (
                         <button id="add-task-btn" onClick={openAdd}>
                             Add Task
                         </button>
                     )}
                     {!isEditing && activeTasks.length > 0 && (
-                        <button id="edit-task-btn" onClick={startEdit}>
+                        <button id="edit-btn" onClick={startEdit}>
                             Edit
                         </button>
                     )}
                     {isEditing && (
                         <>
-                            <button id="edit-task-btn" className="active" onClick={confirmEdit}>
+                            <button id="edit-btn" className="active" onClick={confirmEdit}>
                                 Done
                             </button>
                             <button onClick={cancelEdit}>

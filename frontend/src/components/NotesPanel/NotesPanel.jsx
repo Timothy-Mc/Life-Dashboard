@@ -1,13 +1,8 @@
-import { useState, useEffect } from 'react'
+// import { useState, useEffect } from 'react'
+import useLocalStorage from '../../hooks/useLocalStorage'
 
 function NotesPanel() {
-  const [notes, setNotes] = useState(() => {
-    return localStorage.getItem('notes') || ''
-  });
-
-  useEffect(() => {
-    localStorage.setItem('notes', notes);
-  }, [notes]);
+  const [notes, setNotes] = useLocalStorage('notes', '')
 
   return (
     <section id="notes">
