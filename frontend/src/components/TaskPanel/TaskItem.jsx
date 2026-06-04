@@ -9,11 +9,13 @@ function TaskItem({ task, onToggle, onDelete, isEditing, onTextChange }) {
             />
  
             {isEditing ? (
-                <input
-                    value={task.text}
-                    onChange={e => onTextChange(task.id, e.target.value)}
-                    className="task-text editable"
-                />
+                <div className="edit-bar">
+                    <input
+                        value={task.text}
+                        onChange={e => onTextChange(task.id, e.target.value)}
+                        className="edit-input"
+                    />
+                </div>
             ) : (
                 <span className="task-text">
                     {task.text}

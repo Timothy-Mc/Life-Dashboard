@@ -231,6 +231,17 @@ section button:hover {
     flex-shrink: 0;      /* buttons never compress */
 }
 
+.edit-bar .edit-input {
+    flex: 1;
+    min-width: 0;        /* prevents overflow */
+    font-size: 14px;
+    padding: 6px 10px;
+    border: 1px solid var(--color-border);
+    border-radius: 6px;
+    background: var(--color-bg);
+    color: var(--color-text);
+}
+
 /* ensure delete icon sits at the far right of task rows */
 #tasks .delete-btn {
   margin-left: auto;
