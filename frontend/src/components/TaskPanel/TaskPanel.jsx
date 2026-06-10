@@ -108,7 +108,7 @@ function TaskPanel() {
                     )}
                     {isEditing && (
                         <>
-                            <button id="edit-btn" className="active" onClick={confirmEdit}>
+                            <button id="edit-btn" className="btn-edit-active" onClick={confirmEdit}>
                                 Done
                             </button>
                             <button onClick={cancelEdit}>

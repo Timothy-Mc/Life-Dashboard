@@ -1,222 +1,368 @@
-/*  Reset & base  */
+/* Reset & base */
 * {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
 }
 
 :root {
-  --color-accent: #3B82F6;
-  --color-accent-light: #1962ff;
+    /* Brand / accents */
+    --color-accent: #3b82f6;          /* Cleaner, vibrant dark blue */
+    --color-accent-light: #60a5fa;    /* Soft hover blue */
+    --color-edit-active: #10b981;     /* Crisp green for editing states */
 
-  --color-bg: #121216;
-  --color-surface: #1C1C22;
+    /* Surface */
+    --color-bg: #121216;
+    --color-surface: #1c1c22;
+    --color-border: #32323a;
 
-  --color-text: #F3F4F6;
-  --color-text-muted: #A1A1AA;
+    /* Text */
+    --color-text: #f3f4f6;
+    --color-text-muted: #a1a1aa;
 
-  --color-border: #32323A;
+    /* UI helpers */
+    --color-nav: rgba(255, 255, 255, 0.03);
+    --color-nav-active: rgba(59, 130, 246, 0.1);
+    --color-hover-tint: rgba(255, 255, 255, 0.02);
+    --color-delete: #ef4444;
+    --color-hover-items: rgba(25, 98, 255, 0.06);
 
-  --color-delete: #EF4444;
+    /* Habit streaks */
+    --color-streaks: #f59e0b;
+    --color-streaks-bg: #312b1f;
 
-  --color-streaks: #f59e0b;
-  --color-streaks-bg: #312b1f;
+    --radius: 10px;
+    --gap: 1.25rem;
+}
 
-  --radius: 10px;
-  --gap: 1.25rem;
+body:not(.dark) {
+    /* Brand / Accents */
+    --color-accent: #2563eb;          /* Smooth royal blue for light mode */
+    --color-accent-light: #1d4ed8;    /* Deeper blue for hover */
+    --color-edit-active: #059669;     /* Deep rich green for light mode editing */
+
+    /* Surface */
+    --color-bg: #f8fafc;
+    --color-surface: #ffffff;
+    --color-border: #cbd5e1;
+
+    /* Text */
+    --color-text: #0f172a;
+    --color-text-muted: #64748b; 
+
+    /* UI Helpers */
+    --color-nav: rgba(15, 23, 42, 0.04);     
+    --color-nav-active: rgba(37, 99, 235, 0.1);
+    --color-hover-tint: rgba(15, 23, 42, 0.02);
+    --color-delete: #dc2626;
+
+    /* Habit Streaks */
+    --color-streaks: #b45309;
+    --color-streaks-bg: #fef3c7;
+}
+
+/* Layout */
+.app-container {
+    display: grid;
+    grid-template-columns: 200px 1fr;
+    min-height: 100vh;
+}
+
+.main-content {
+    display: flex;
+    flex-direction: column;
+    padding: 1.5rem;
+}
+
+.page-content {
+    flex-grow: 1;
+    margin-top: 1rem;
 }
 
 body {
-  font-family: 'Inter', sans-serif;
-  background: var(--color-bg);
-  color: var(--color-text);
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
+    font-family: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    background: var(--color-bg);
+    color: var(--color-text);
+    min-height: 100vh;
 }
 
-/*  Header  */
+/* Sidebar */
+.sidebar {
+    background: var(--color-surface);
+    border-right: 1px solid var(--color-border);
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+}
+
+.sidebar .sidebar-brand {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--color-text);
+    margin-bottom: 32px;
+    padding-left: 12px;
+}
+
+.sidebar .sidebar-links {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+/* Nav */
+.nav-button,
+.sidebar .sidebar-links a {
+    background: none;
+    border: none;
+    padding: 12px 16px;
+    cursor: pointer;
+    text-decoration: none;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    border-radius: 8px;
+    font-size: 0.95rem;
+    font-weight: 500;
+    color: var(--color-text-muted);
+    transition: color 0.15s, background 0.15s;
+}
+
+.nav-button:hover,
+.sidebar .sidebar-links a:hover {
+    color: var(--color-text);
+    background: var(--color-nav);
+}
+
+.nav-button.active,
+.sidebar .sidebar-links a.active {
+    color: var(--color-accent) !important;
+    background: var(--color-nav-active) !important;
+    font-weight: 600;
+}
+
+/* Header */
 .header {
-  display: flex;
-  align-items: baseline;
-  justify-content: space-between;
-  
-  background: var(--color-surface);
-  
-  padding: 1.25rem 2rem;
-  border-bottom: 1px solid var(--color-border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: var(--color-surface);
+    padding: 1.25rem 2rem;
+    margin-bottom: 1rem;
+    border-bottom: 1px solid var(--color-border);
+    border-radius: var(--radius);
+    width: 100%;
 }
 
 .header h1 {
-  font-size: 2rem;
-  font-weight: 700;
-  letter-spacing: -0.03em;
+    font-size: 1.75rem;
+    font-weight: 700;
+    letter-spacing: -0.03em;
+    color: var(--color-text);
 }
 
 .header p {
-  font-size: 0.9rem;
-  color: var(--color-text-muted);
+    font-size: 0.9rem;
+    color: var(--color-text-muted);
+    font-weight: 500;
 }
 
-/*  Three-panel grid  */
+/* Panels */
 .panels {
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  gap: var(--gap);
-  padding: var(--gap) 2rem;
-  flex: 1;
-  align-items: start;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--gap);
+    padding: var(--gap) 2rem;
+    flex: 1;
+    align-items: start;
 }
 
-/*  Panel cards  */
 section {
-  background: var(--color-surface);
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius);
-  padding: 1.25rem;
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius);
+    padding: 1.25rem;
 }
 
 section h2 {
-  font-size: 13px;
-  font-weight: 500;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  color: var(--color-text-muted);
-  margin-bottom: 1rem;
+    font-size: 13px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--color-text-muted);
+    margin-bottom: 1rem;
 }
 
-/* Shared button styles (used by panel and modal buttons) */
+/* Buttons */
+.btn,
 section button,
 .modal-content button {
-  background: var(--color-accent);
-  color: #fff;
-  border: none;
-  border-radius: 6px;
-  padding: 6px 12px;
-  font-size: 12px;
-  cursor: pointer;
-  transition: background 0.15s;
+    background: var(--color-accent);
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    padding: 6px 12px;
+    font-size: 12px;
+    cursor: pointer;
+    transition: background 0.15s;
 }
 
-.modal-content button:hover,
-section button:hover {
-  background: var(--color-accent-light);
+.btn:hover,
+section button:hover,
+.modal-content button:hover {
+    background: var(--color-accent-light);
 }
 
 .delete-btn {
-  cursor: pointer;
-  font-size: 12px;
-  color: var(--color-text-muted);
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  width: 22px;
-  height: 22px;
-  border-radius: 6px;
-
-  transition: background 0.15s, color 0.15s;
-  flex-shrink: 0;
+    cursor: pointer;
+    font-size: 12px;
+    color: var(--color-text-muted);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 22px;
+    height: 22px;
+    border-radius: 6px;
+    transition: background 0.15s, color 0.15s;
+    flex-shrink: 0;
 }
 
 .delete-btn svg {
-  pointer-events: none;
+    pointer-events: none;
 }
 
 .delete-btn:hover {
-  color: var(--color-text);
-  background: var(--color-delete);
+    color: var(--color-text);
+    background: var(--color-delete);
 }
 
-/*  Tasks panel  */
+/* Tasks */
 #tasks ul {
-  list-style: none;
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding: 0;
+    margin: 0;
 }
 
 #tasks li {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  padding: 8px 10px;
-  border-radius: 6px;
-  font-size: 14px;
-  cursor: pointer;
-  transition: background 0.15s;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 10px;
+    border-radius: 6px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background 0.15s;
 }
 
 #tasks li:hover {
-  background: var(--color-accent-light);
+    background: var(--color-hover-items);
 }
 
 #tasks input[type="checkbox"] {
-  accent-color: var(--color-accent);
-  width: 16px;
-  height: 16px;
-  flex-shrink: 0;
-  cursor: pointer;
-  margin-right: 8px;
+    appearance: none; /* Removes the old browser styling */
+    -webkit-appearance: none;
+    width: 18px;
+    height: 18px;
+    border: 2px solid var(--color-border);
+    border-radius: 4px;
+    background: var(--color-surface);
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.15s ease;
+    margin-right: 8px;
+    flex-shrink: 0;
+    position: relative;
 }
 
-/* disabled checkbox styling when editing */
+#tasks input[type="checkbox"]:checked {
+    background: var(--color-accent);
+    border-color: var(--color-accent);
+}
+
+#tasks input[type="checkbox"]:checked::after {
+    content: "";
+    width: 5px;
+    height: 9px;
+    border: solid white;
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg);
+    position: absolute;
+    top: 1px;
+}
+
 #tasks input[type="checkbox"][disabled] {
-  opacity: 0.4;
-  cursor: not-allowed;
+    opacity: 0.4;
+    cursor: not-allowed;
 }
 
-#tasks li label {
-  display: flex;
-  align-items: center;
-  width: 100%;
-  cursor: pointer;
+#tasks .task-text {
+    flex: 1 1 auto;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
-#tasks li .task-del {
-  margin-left: auto;
+.task-item {
+    min-height: 48px;
+}
+
+.task-item.editing .task-del {
+    display: flex;
+}
+
+.btn-edit-active {
+    background: var(--color-edit-active) !important;
+    color: #ffffff !important;
+}
+
+.btn-edit-active:hover {
+    opacity: 0.9;
+}
+
+.task-item.completed {
+    text-decoration: line-through;
+    color: var(--color-text-muted);
+    opacity: 0.6;
 }
 
 .task-error {
     font-size: 12px;
-    color: red;
+    color: var(--color-delete);
     margin: 4px 0;
 }
 
 .task-count {
     font-size: 12px;
-    color: gray;
+    color: var(--color-text-muted);
     margin-top: 8px;
 }
 
 .header-btns {
-  display: flex;
-  align-items: center;
-  gap: 8px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
 }
 
-.task-del {
-  display: none;
-  cursor: pointer;
-  width: 22px;
-  height: 22px;
-  align-items: center;
-  justify-content: center;
-}
-
-.add-bar {
+.add-bar,
+.edit-bar {
     display: flex;
     align-items: center;
     gap: 8px;
     padding: 10px 1rem;
-    /* border-bottom: 1px solid #eee; */
-    /* background: #fafafa; */
 }
 
-.add-bar .add-input {
+.add-bar .add-input,
+.edit-bar .edit-input {
     flex: 1;
-    min-width: 0;        /* prevents overflow */
+    min-width: 0;
     font-size: 14px;
     padding: 6px 10px;
     border: 1px solid var(--color-border);
@@ -228,61 +374,13 @@ section button:hover {
 .add-bar .add-bar-actions {
     display: flex;
     gap: 6px;
-    flex-shrink: 0;      /* buttons never compress */
+    flex-shrink: 0;
 }
 
-.edit-bar .edit-input {
-    flex: 1;
-    min-width: 0;        /* prevents overflow */
-    font-size: 14px;
-    padding: 6px 10px;
-    border: 1px solid var(--color-border);
-    border-radius: 6px;
-    background: var(--color-bg);
-    color: var(--color-text);
-}
-
-/* ensure delete icon sits at the far right of task rows */
-#tasks .delete-btn {
-  margin-left: auto;
-}
-
-/* allow task text to take remaining space and truncate */
-#tasks .task-text {
-  flex: 1 1 auto;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
-.task-item.editing .task-del {
-  display: flex;
-}
-
-/* editable task name styling */
-.task-text.editable {
-  display: inline-block;
-  flex: 0 0 auto;
-  padding: 2px 6px;
-  border-radius: 6px;
-  outline: 2px solid rgba(16,185,129,0.12);
-  max-width: calc(100% - 80px);
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-/* edit button active (editing) */
-#edit-btn.active {
-  background: #10B981;
-  color: #fff;
-}
-
-
-.task-item.completed   {
-    text-decoration: line-through;
+.task-empty {
+    padding: 12px;
     color: var(--color-text-muted);
-    opacity: 0.6;
+    font-size: 13px;
 }
 
 .header-row {
@@ -297,309 +395,170 @@ section button:hover {
     background: var(--color-surface);
 }
 
-.task-filters {
-  display: flex;
-  gap: 8px;
-  margin-bottom: 0.75rem;
+/* Habits */
+.habit-list,
+#habits .habit-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding: 0;
+    margin: 0;
 }
 
-.filter-btn {
-  background: transparent;
-  color: var(--color-text-muted);
-  border: 1px solid transparent;
-  padding: 6px 10px;
-  border-radius: 6px;
-  font-size: 12px;
-  cursor: pointer;
-}
-
-.filter-btn.active {
-  background: var(--color-accent);
-  color: #fff;
-}
-
-.clear-btn {
-  background: transparent;
-  border: 1px solid var(--color-border);
-  color: var(--color-text-muted);
-}
-
-.task-empty {
-  padding: 12px;
-  color: var(--color-text-muted);
-  font-size: 13px;
-}
-
-/*  Modal  */
-.modal {
-    position: fixed;
-    top: 0;
-    left: 0;
+.habit-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 8px 10px;
+    border-radius: 6px;
+    transition: background 0.15s;
+    min-height: 48px;
     width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.6);
+}
 
-    display: none;
+.habit-item:hover {
+    background: var(--color-hover-items);
+}
+
+.habit-meta {
+    display: flex;
+    align-items: center;
+    gap: 8px; /* Slightly tighter gap for cleaner presentation */
+    flex: 1;
+    min-width: 0;
+}
+
+.habit-text {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--color-text);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.streak-badge {
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--color-streaks);
+    background: var(--color-streaks-bg);
+    padding: 2px 6px;
+    border-radius: 4px;
+    white-space: nowrap;
+}
+
+.habit-days-row {
+    display: flex;
+    gap: 5px;
+    align-items: center;
+    margin-left: 12px;
+    flex-shrink: 0;
+}
+
+.day-node {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    font-size: 11px;
+    font-weight: 600;
+    display: inline-flex;
     align-items: center;
     justify-content: center;
-
-    padding: 1rem;
-    z-index: 1000;
+    cursor: pointer;
+    border: 1px solid var(--color-border);
+    background: var(--color-bg);
+    color: var(--color-text-muted);
+    transition: all 0.15s ease;
+    user-select: none;
 }
 
-/* when modal is active */
-.modal.active {
+.day-node:hover:not(:disabled) {
+    border-color: var(--color-accent);
+    color: var(--color-text);
+}
+
+.day-node.checked {
+    background: var(--color-accent);
+    border-color: var(--color-accent);
+    color: #fff;
+}
+
+.day-node.checked:hover:not(:disabled) {
+    background: var(--color-accent-light);
+    border-color: var(--color-accent-light);
+}
+
+.day-node.today {
+    border: 2px solid var(--color-accent) !important;
+    color: var(--color-text);
+}
+
+.day-node:disabled {
+    cursor: not-allowed;
+    opacity: 0.3;
+}
+
+.habit-item .edit-bar {
+    display: flex;
+    flex: 1;
+    max-width: 180px;
+}
+
+.habit-del {
+    display: none;
+    margin-left: 10px;
+    flex-shrink: 0;
+}
+
+.habit-item.editing .habit-del {
     display: flex;
 }
 
-.modal-content {
-    background: var(--color-surface);
+/* Notes */
+#notes textarea {
+    width: 100%;
+    min-height: 160px;
     border: 1px solid var(--color-border);
-    border-radius: var(--radius);
-
-    width: 100%;
-    max-width: 420px;
-
-    padding: 1.25rem;
-    position: relative;
-
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
-}
-
-/* title / spacing */
-.modal-content h2 {
-    font-size: 13px;
-    font-weight: 500;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-    color: var(--color-text-muted);
-    margin-bottom: 1rem;
-}
-
-/*  Input fields  */
-.modal-content input {
-    width: 100%;
-    padding: 10px 12px;
-
     border-radius: 6px;
-    border: 1px solid var(--color-border);
-
-    background: var(--color-bg);
-    color: var(--color-text);
-
+    padding: 10px 12px;
+    font-family: inherit;
     font-size: 14px;
-
+    color: var(--color-text);
+    background: var(--color-bg);
+    resize: none;
     outline: none;
-    transition: border-color 0.15s, background 0.15s;
+    transition: border-color 0.15s;
+    line-height: 1.6;
 }
 
-.modal-content input:focus {
+#notes textarea:focus {
     border-color: var(--color-accent);
     background: var(--color-surface);
 }
 
-.modal-content .modal-actions {
-    display: flex;
-    justify-content: flex-end;
-    gap: 10px;
-    margin-top: 1rem;
-} 
-
-.modal-content button {
-    background: var(--color-accent);
-    color: #fff;
-    border: none;
-    border-radius: 6px;
-    padding: 6px 12px;
-    font-size: 12px;
-    cursor: pointer;
-    transition: background 0.15s;
-}
-
-.modal-content button:hover {
-    background: var(--color-accent-light);
-}
-
-.modal-content .close {
-    position: absolute;
-    top: 10px;
-    right: 12px;
-
-    font-size: 18px;
-    color: var(--color-text-muted);
-
-    cursor: pointer;
-}
-
-.modal-content .close:hover {
-    color: var(--color-text);
-}
-/* Habits panel  */
-#habits .habit-list {
-  list-style: none;
-  display: flex;
-  flex-direction: column;
-  gap: 8px; /* Tightly stack your new habit rows */
-  padding: 0;
-  margin: 0;
-}
-
-.habit-item {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 10px 8px;
-  border-radius: 6px;
-  transition: background 0.15s;
-}
-
-.habit-item:hover {
-  background: rgba(255, 255, 255, 0.02); /* Very subtle hover feedback */
-}
-
-/* Meta: Grouping text/input and streak badges on the left */
-.habit-meta {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  flex: 1 1 auto;
-  min-width: 0; /* Layout guard for text truncation */
-}
-
-.habit-text {
-  font-size: 14px;
-  font-weight: 500;
-  color: var(--color-text);
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
-.streak-badge {
-  font-size: 11px;
-  font-weight: 600;
-  color: var(--color-streaks);
-  background: var(--color-streaks-bg);
-  padding: 2px 6px;
-  border-radius: 4px;
-  white-space: nowrap;
-}
-
-/* Horizontal Day Button Grouping */
-.habit-days-row {
-  display: flex;
-  gap: 5px;
-  align-items: center;
-  margin-left: 12px;
-  flex-shrink: 0; /* Prevents calendar nodes from compressing */
-}
-
-/* Small, elegant circular tracker node */
-.day-node {
-  width: 28px;
-  height: 28px;
-  border-radius: 50%; /* Perfect Circle */
-  font-size: 11px;
-  font-weight: 600;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  border: 1px solid var(--color-border);
-  background: var(--color-bg);
-  color: var(--color-text-muted);
-  transition: all 0.15s ease;
-  user-select: none;
-}
-
-.day-node:hover:not(:disabled) {
-  border-color: var(--color-accent);
-  color: var(--color-text);
-}
-
-/* Checked / Completed Day State */
-.day-node.checked {
-  background: var(--color-accent);
-  border-color: var(--color-accent);
-  color: #fff;
-}
-
-.day-node.checked:hover:not(:disabled) {
-  background: var(--color-accent-light);
-  border-color: var(--color-accent-light);
-}
-
-/* Highlight Indicator for Today (Vibrant Blue Ring) */
-.day-node.today {
-  border: 2px solid var(--color-accent) !important;
-  color: var(--color-text);
-}
-
-/* Soft gray overlay locking clicks during edit mode structural adjustments */
-.day-node:disabled {
-  cursor: not-allowed;
-  opacity: 0.3;
-}
-
-/* Inline Staging Input updates */
-.habit-item .edit-bar {
-  display: flex;
-  flex: 1;
-  max-width: 180px;
-}
-
-/* Delete Button configuration */
-.habit-del {
-  display: none; /* Hidden unless row parent enters active .editing state */
-  margin-left: 10px;
-  flex-shrink: 0;
-}
-
-.habit-item.editing .habit-del {
-  display: flex;
-}
-
-/*  Notes panel  */
-#notes textarea {
-  width: 100%;
-  min-height: 160px;
-  border: 1px solid var(--color-border);
-  border-radius: 6px;
-  padding: 10px 12px;
-  font-family: inherit;
-  font-size: 14px;
-  color: var(--color-text);
-  background: var(--color-bg);
-  resize: none;
-  outline: none;
-  transition: border-color 0.15s;
-  line-height: 1.6;
-}
-
-#notes textarea:focus {
-  border-color: var(--color-accent);
-  background: var(--color-surface);
-}
-
-/*  Footer  */
+/* Footer */
 footer {
-  text-align: center;
-  padding: 1rem;
-  font-size: 12px;
-  color: var(--color-text-muted);
-  border-top: 1px solid var(--color-border);
+    text-align: center;
+    padding: 1rem;
+    font-size: 12px;
+    color: var(--color-text-muted);
+    border-top: 1px solid var(--color-border);
 }
 
-/*  Responsive: mobile  */
+/* Responsive */
 @media (max-width: 700px) {
-  .panels {
-    grid-template-columns: 1fr;
-    padding: 1rem;
-  }
+    .panels {
+        grid-template-columns: 1fr;
+        padding: 1rem;
+    }
 
-  header {
-    flex-direction: column;
-    gap: 4px;
-    padding: 1rem;
-  }
+    header {
+        flex-direction: column;
+        gap: 4px;
+        padding: 1rem;
+    }
 }
