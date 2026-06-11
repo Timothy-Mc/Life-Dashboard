@@ -160,7 +160,7 @@ function HabitPanel() {
                 )}
 				{isEditing && (
 					<>
-						<button id="edit-btn" className="active" onClick={confirmEdit}>
+            <button id="edit-btn" className="btn-edit-active" onClick={confirmEdit}>
 							Done
 						</button>
 						<button onClick={cancelEdit}>
@@ -184,10 +184,10 @@ function HabitPanel() {
 					placeholder="What needs to be done?"
 					className="add-input"
 				/>
-				<div className="add-bar-actions">
-					<button className="btn-confirm" onClick={confirmAdd}>Add</button>
-					<button className="btn-cancel" onClick={closeAdd}>Cancel</button>
-				</div>
+        <div className="add-bar-actions">
+          <button className="btn" onClick={confirmAdd}>Add</button>
+          <button className="btn" onClick={closeAdd}>Cancel</button>
+        </div>
 			</div>
 		)}
 

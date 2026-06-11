@@ -1,10 +1,19 @@
 import { NavLink } from 'react-router-dom'
-
+import { useTheme } from '../context/ThemeContext';
+import { useFormattedDate } from '../../hooks/useFormattedDate'
 
 function SideBar() {
+    const { dark, setDark } = useTheme();
+
+    const date = useFormattedDate();
+
+
     return (
         <aside className='sidebar'>
-            <div className="sidebar-brand">Life Dashboard</div>
+            <div className="sidebar-title">
+                <h2>Life Dashboard</h2>
+                <p>{date}</p>
+            </div>
 
             <ul className='sidebar-links'>
                 <li>
@@ -21,7 +30,17 @@ function SideBar() {
                 </li>
             </ul>
 
-            {/* <div className="sidebar-footer">Profile</div> */}
+            <div className="sidebar-footer">
+                <button
+                    type="button"
+                    className='nav-button'
+                    onClick={() => setDark(!dark)}
+                >
+                    <span>{dark ? '🌙 Dark Mode' : '☀️ Light Mode'}</span>
+                </button>
+
+            </div>
+
         </aside>
     )
 }

@@ -3,7 +3,7 @@
 function NavItem({ label, isActive, onClick }) {
 
     return (
-        <li className="nav-item">
+        <li>
             <button 
                 onClick={onClick}
                 className={`nav-button ${isActive ? 'active' : ''}`}

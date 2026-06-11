@@ -64,7 +64,7 @@ body:not(.dark) {
 /* Layout */
 .app-container {
     display: grid;
-    grid-template-columns: 200px 1fr;
+    grid-template-columns: 260px 1fr;
     min-height: 100vh;
 }
 
@@ -95,12 +95,41 @@ body {
     flex-direction: column;
 }
 
-.sidebar .sidebar-brand {
+.sidebar .sidebar-title {
     font-size: 1.25rem;
     font-weight: 700;
     color: var(--color-text);
     margin-bottom: 32px;
     padding-left: 12px;
+}
+
+.sidebar-title {
+    border-bottom: 1px solid var(--color-border);
+    padding-top: 1rem;
+    padding-bottom: 2rem;
+
+    margin-left: -1rem;
+    margin-right: -1rem;
+
+    padding-left: calc(12px + 1rem);
+    padding-right: 1rem;
+
+}
+
+.sidebar-title h2 {
+    font-size: 1.6rem;
+    font-weight: 700;
+    letter-spacing: -0.03em;
+    color: var(--color-text);
+    padding: 0px 16px;
+}
+
+.sidebar-title p {
+    font-size: 0.75rem;
+    color: var(--color-text-muted);
+    font-weight: 500;
+    padding-left: 16px;
+    padding-top: 5px;
 }
 
 .sidebar .sidebar-links {
@@ -113,8 +142,7 @@ body {
 }
 
 /* Nav */
-.nav-button,
-.sidebar .sidebar-links a {
+.nav-button {
     background: none;
     border: none;
     padding: 12px 16px;
@@ -131,22 +159,66 @@ body {
     transition: color 0.15s, background 0.15s;
 }
 
-.nav-button:hover,
-.sidebar .sidebar-links a:hover {
+.nav-button:hover {
     color: var(--color-text);
     background: var(--color-nav);
 }
 
-.nav-button.active,
-.sidebar .sidebar-links a.active {
+.nav-button.active {
     color: var(--color-accent) !important;
     background: var(--color-nav-active) !important;
     font-weight: 600;
 }
 
+.sidebar-footer {
+    margin-top: auto;
+    margin-left: -1rem;
+    margin-right: -1rem;
+    width: calc(100% + 2rem);
+    border-top: 1px solid var(--color-border);
+    padding-top: 0.5rem;
+    padding-left: 1rem;
+    padding-right: 1rem;
+}
+
+/* Make footer toggle text match nav links exactly, but prevent the "active" accent */
+.sidebar-footer .nav-button {
+    background: none;
+    border: none;
+    padding: 12px 16px;
+    cursor: pointer;
+    text-decoration: none;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    border-radius: 8px;
+    font-size: 0.95rem;
+    font-weight: 500;
+    color: var(--color-text-muted);
+    transition: color 0.15s, background 0.15s;
+    justify-content: flex-start;
+    font-family: inherit;
+    letter-spacing: normal;
+}
+
+.sidebar-footer .nav-button:hover {
+    color: var(--color-text);
+    background: var(--color-nav);
+}
+
+/* Allow hover to still apply after clicking: don't lock color/background on focus/active */
+.sidebar-footer .nav-button.active,
+.sidebar-footer .nav-button:active,
+.sidebar-footer .nav-button:focus {
+    outline: none;
+    box-shadow: none;
+}
+
+
 /* Header */
 .header {
-    display: flex;
+    /* display: flex;
     align-items: center;
     justify-content: space-between;
     background: var(--color-surface);
@@ -154,11 +226,13 @@ body {
     margin-bottom: 1rem;
     border-bottom: 1px solid var(--color-border);
     border-radius: var(--radius);
-    width: 100%;
+    width: 100%; */
+    padding-left: 1rem;
+    margin-top: -1rem;
 }
 
 .header h1 {
-    font-size: 1.75rem;
+    font-size: 2.25rem;
     font-weight: 700;
     letter-spacing: -0.03em;
     color: var(--color-text);
@@ -175,7 +249,7 @@ body {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: var(--gap);
-    padding: var(--gap) 2rem;
+    padding: var(--gap) 1rem;
     flex: 1;
     align-items: start;
 }
@@ -196,10 +270,14 @@ section h2 {
     margin-bottom: 1rem;
 }
 
+/* Full width page wrapper used by single-panel pages */
+.full-width-panel {
+    padding: var(--gap);
+}
+
 /* Buttons */
 .btn,
-section button,
-.modal-content button {
+section button {
     background: var(--color-accent);
     color: #fff;
     border: none;
@@ -211,8 +289,7 @@ section button,
 }
 
 .btn:hover,
-section button:hover,
-.modal-content button:hover {
+section button:hover {
     background: var(--color-accent-light);
 }
 
@@ -237,6 +314,11 @@ section button:hover,
 .delete-btn:hover {
     color: var(--color-text);
     background: var(--color-delete);
+}
+
+/* Ensure task delete button sits at the far right of its row when visible */
+.task-del {
+    margin-left: auto;
 }
 
 /* Tasks */
@@ -377,11 +459,7 @@ section button:hover,
     flex-shrink: 0;
 }
 
-.task-empty {
-    padding: 12px;
-    color: var(--color-text-muted);
-    font-size: 13px;
-}
+/* `.task-empty` removed — not used in components */
 
 .header-row {
     display: flex;

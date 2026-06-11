@@ -1,8 +1,15 @@
+import { useFormattedDate } from '../hooks/useFormattedDate'
 
-function Header({ date }) {
+function Header() {
+    const date = useFormattedDate({
+        month: 'short',
+        year: undefined
+    });
+
+
     return (
         <header className="header">
-            <h1>Life Dashboard</h1>
+            <h1>Overview</h1>
             <p>{date}</p>
         </header>
     )

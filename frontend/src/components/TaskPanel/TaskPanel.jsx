@@ -133,8 +133,8 @@ function TaskPanel() {
                         className="add-input"
                     />
                     <div className="add-bar-actions">
-                        <button className="btn-confirm" onClick={confirmAdd}>Add</button>
-                        <button className="btn-cancel" onClick={closeAdd}>Cancel</button>
+                        <button className="btn" onClick={confirmAdd}>Add</button>
+                        <button className="btn" onClick={closeAdd}>Cancel</button>
                     </div>
                 </div>
             )}
